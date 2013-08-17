@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.datumdroid.android.ocr.simple"
+    package="com.wws.android.ocr.opencv"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="10" />
 
     <application
+        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:debuggable="true">
+        android:label="@string/app_name" >
         <activity
+            android:name="com.wws.android.ocr.opencv.SimpleAndroidOCRActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"
-            android:name=".SimpleAndroidOCRActivity">
-            <intent-filter >
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.wws.android.ocr.opencv.CameraScreen"
+            android:label="@string/title_activity_camera_screen" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

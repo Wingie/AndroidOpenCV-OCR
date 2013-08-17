@@ -1,4 +1,4 @@
-package com.datumdroid.android.ocr.simple;
+package com.wws.android.ocr.opencv;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,11 +23,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.wws.android.ocr.opencv.R;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class SimpleAndroidOCRActivity extends Activity {
-	public static final String PACKAGE_NAME = "com.datumdroid.android.ocr.simple";
+	public static final String PACKAGE_NAME = "com.wws.android.ocr.opencv";
 	public static final String DATA_PATH = Environment
 			.getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
 	
@@ -39,7 +41,7 @@ public class SimpleAndroidOCRActivity extends Activity {
 	private static final String TAG = "SimpleAndroidOCR.java";
 
 	protected Button _button;
-	// protected ImageView _image;
+	protected ImageView _image;
 	protected EditText _field;
 	protected String _path;
 	protected boolean _taken;
@@ -98,7 +100,7 @@ public class SimpleAndroidOCRActivity extends Activity {
 
 		setContentView(R.layout.main);
 
-		// _image = (ImageView) findViewById(R.id.image);
+		_image = (ImageView) findViewById(R.id.imageView1);
 		_field = (EditText) findViewById(R.id.field);
 		_button = (Button) findViewById(R.id.button);
 		_button.setOnClickListener(new ButtonClickHandler());
@@ -158,7 +160,7 @@ public class SimpleAndroidOCRActivity extends Activity {
 		options.inSampleSize = 4;
 
 		Bitmap bitmap = BitmapFactory.decodeFile(_path, options);
-
+		
 		try {
 			ExifInterface exif = new ExifInterface(_path);
 			int exifOrientation = exif.getAttributeInt(
@@ -204,7 +206,8 @@ public class SimpleAndroidOCRActivity extends Activity {
 			Log.e(TAG, "Couldn't correct orientation: " + e.toString());
 		}
 
-		// _image.setImageBitmap( bitmap );
+		 _image.setImageBitmap( bitmap );
+		
 		
 		Log.v(TAG, "Before baseApi");
 
