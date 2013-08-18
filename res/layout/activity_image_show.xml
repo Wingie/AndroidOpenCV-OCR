@@ -22,8 +22,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textOn="Gray"
+        android:text="Gray"
         android:textOff="RGB"
-        android:text="Gray" />
+        android:textOn="Gray" />
+
+    <Button
+        android:id="@+id/buttonOCR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toggleButton1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/imageView1"
+        android:text="DO OCR" />
 
 </RelativeLayout>

@@ -70,7 +70,7 @@ public class CameraScreen extends Activity implements CvCameraViewListener2, OnT
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.finishedPic();
+//        this.finishedPic();
         setContentView(R.layout.image_manipulations_surface_view);
 
         mOpenCvCameraView = (CameraController) findViewById(R.id.image_manipulations_activity_surface_view);
