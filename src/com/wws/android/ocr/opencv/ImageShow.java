@@ -25,6 +25,8 @@ import org.opencv.imgproc.Imgproc;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import  com.wws.android.ocr.opencv.OcrResult;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
@@ -52,7 +54,8 @@ public class ImageShow extends Activity {
 	 private Mat  					mIntermediateMat;
 	 private ImageView 				myImage;
 	 
-	 private boolean gray;
+	 private boolean GRAY;
+	 private boolean THRESHOLD;
 	 
 	 public static final String DATA_PATH = Environment
 				.getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
@@ -72,6 +75,7 @@ public class ImageShow extends Activity {
 	            }
 	        }
 	    };
+	protected com.wws.android.ocr.opencv.OcrResult ocrResult;
 	    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,9 +142,21 @@ public class ImageShow extends Activity {
 		graybutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		        if (isChecked) {
-		        	gray = true;		        	
+		        	GRAY = true;		        	
 		        } else {
-		        	gray = false;
+		        	GRAY = false;
+		        }
+		        render();
+		    }
+		});
+		
+		ToggleButton threshbutton = (ToggleButton) findViewById(R.id.toggleThreshold);
+		threshbutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		        if (isChecked) {
+		        	THRESHOLD = true;		        	
+		        } else {
+		        	THRESHOLD = false;
 		        }
 		        render();
 		    }
@@ -155,7 +171,19 @@ public class ImageShow extends Activity {
         		baseApi.init(DATA_PATH, lang);
         		baseApi.setImage(workingBitmap);
         		
+        		ocrResult = new OcrResult();
+        	    ocrResult.setWordConfidences(baseApi.wordConfidences());
+        	    ocrResult.setMeanConfidence( baseApi.meanConfidence());
+        	    ocrResult.setRegionBoundingBoxes(baseApi.getRegions().getBoxRects());
+        	    ocrResult.setTextlineBoundingBoxes(baseApi.getTextlines().getBoxRects());
+        	    ocrResult.setWordBoundingBoxes(baseApi.getWords().getBoxRects());
+        	    ocrResult.setStripBoundingBoxes(baseApi.getStrips().getBoxRects());
+        	    ocrResult.setBitmap(workingBitmap);
+        	    
+        	    workingBitmap = ocrResult.getAnnotatedBitmap();
+        	    myImage.setImageBitmap(workingBitmap);
         		String recognizedText = baseApi.getUTF8Text();
+        		
         		Log.v(TAG, "OCR RESULT: "+recognizedText);
         		baseApi.end();
 
@@ -170,8 +198,13 @@ public class ImageShow extends Activity {
 		Utils.bitmapToMat(myBitmap, mrgba);
 		workingBitmap = myBitmap.copy(Bitmap.Config.ARGB_8888, true);
 		
-		if(gray){
+		if(GRAY){
 			Imgproc.cvtColor(mrgba, mrgba, Imgproc.COLOR_RGB2GRAY,3);
+			}
+		if(THRESHOLD){
+//			Imgproc.GaussianBlur(mrgba, mrgba, new Size(15,15),50);
+			Imgproc.cvtColor(mrgba, mrgba, Imgproc.COLOR_RGB2GRAY,3);
+			Imgproc.threshold(mrgba, mrgba,0,255,Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
 		}
 
 		Utils.matToBitmap(mrgba, workingBitmap);

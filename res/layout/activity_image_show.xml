@@ -23,8 +23,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Gray"
-        android:textOff="RGB"
-        android:textOn="Gray" />
+        android:textOff="GRAY"
+        android:textOn="RGB" />
 
     <Button
         android:id="@+id/buttonOCR"
@@ -34,5 +34,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/imageView1"
         android:text="DO OCR" />
+
+    <ToggleButton
+        android:id="@+id/toggleThreshold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/toggleButton1"
+        android:text="ToggleButton" 
+        android:textOff="THRESH"
+        android:textOn="NORMAL"
+        />
 
 </RelativeLayout>
