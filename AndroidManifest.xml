@@ -26,6 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.wws.android.ocr.opencv.ImageShow"
+            android:label="@string/title_activity_image_show" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />

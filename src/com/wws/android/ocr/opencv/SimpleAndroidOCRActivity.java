@@ -38,7 +38,7 @@ public class SimpleAndroidOCRActivity extends Activity {
 	// http://code.google.com/p/tesseract-ocr/downloads/list
 	public static final String lang = "eng";
 
-	private static final String TAG = "SimpleAndroidOCR.java";
+	private static final String TAG = "OCR::CV";
 
 	protected Button _button;
 	protected ImageView _image;
@@ -111,7 +111,7 @@ public class SimpleAndroidOCRActivity extends Activity {
 	public class ButtonClickHandler implements View.OnClickListener {
 		public void onClick(View view) {
 			Log.v(TAG, "Starting Camera app");
-			startCameraActivity();
+			//startCameraActivity();
 		}
 	}
 
