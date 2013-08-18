@@ -17,7 +17,7 @@ public class CameraController extends JavaCameraView implements PictureCallback 
 
     private static final String TAG = "OCR::CV";
     private String mPictureFileName;
-
+    private CameraScreen caller;
     public CameraController(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -57,9 +57,10 @@ public class CameraController extends JavaCameraView implements PictureCallback 
     
   
     	  
-    public void takePicture(final String fileName) {
+    public void takePicture(final String fileName, CameraScreen c) {
         Log.i(TAG, "Taking picture");
         this.mPictureFileName = fileName;
+        this.caller = c;
     	mCamera.autoFocus(myAutoFocusCallback);
     }
 
@@ -107,6 +108,7 @@ public class CameraController extends JavaCameraView implements PictureCallback 
     	        } catch (java.io.IOException e) {
     	            Log.e("PictureDemo", "Exception in photoCallback", e);
     	        }
+    	        caller.finishedPic();
     		  }
     	  };
     };

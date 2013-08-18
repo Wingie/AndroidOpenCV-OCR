@@ -15,9 +15,11 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileObserver;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +40,8 @@ public class CameraScreen extends Activity implements CvCameraViewListener2, OnT
     private SubMenu mColorEffectsMenu;
     private MenuItem[] mResolutionMenuItems;
     private SubMenu mResolutionMenu;
-
+    private String fileName = Environment.getExternalStorageDirectory().getPath() +
+            "/SimpleAndroidOCR/"+"pic_orig.jpg";
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -168,16 +171,21 @@ public class CameraScreen extends Activity implements CvCameraViewListener2, OnT
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.i(TAG,"onTouch event");
-        String fileName = Environment.getExternalStorageDirectory().getPath() +
-                               "/SimpleAndroidOCR/"+"pic_orig.jpg";
+       
         File file = new File(fileName);
         try {
 			boolean deleted = file.delete();
 		} catch (Exception e) {
 			// pass if file not exist
 		}
-        mOpenCvCameraView.takePicture(fileName);
-        Toast.makeText(this, fileName + " saved", Toast.LENGTH_SHORT).show();
+        mOpenCvCameraView.takePicture(fileName,this);
         return false;
+    }
+    
+    public void finishedPic(){
+    	Log.i(TAG,"FINISHED CALLBACK");
+    	Intent intent = new Intent(CameraScreen.this, ImageShow.class);
+    	intent.putExtra("FILE_NAME",fileName);
+        startActivity(intent);
     }
 }
