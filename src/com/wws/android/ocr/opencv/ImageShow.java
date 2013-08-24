@@ -40,6 +40,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class ImageShow extends Activity {
@@ -185,6 +187,7 @@ public class ImageShow extends Activity {
         		String recognizedText = baseApi.getUTF8Text();
         		
         		Log.v(TAG, "OCR RESULT: "+recognizedText);
+        		Toast.makeText(ImageShow.this, recognizedText, Toast.LENGTH_LONG).show();
         		baseApi.end();
 
             }
@@ -202,7 +205,7 @@ public class ImageShow extends Activity {
 			Imgproc.cvtColor(mrgba, mrgba, Imgproc.COLOR_RGB2GRAY,3);
 			}
 		if(THRESHOLD){
-//			Imgproc.GaussianBlur(mrgba, mrgba, new Size(15,15),50);
+			Imgproc.GaussianBlur(mrgba, mrgba, new Size(9,9),15);
 			Imgproc.cvtColor(mrgba, mrgba, Imgproc.COLOR_RGB2GRAY,3);
 			Imgproc.threshold(mrgba, mrgba,0,255,Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
 		}

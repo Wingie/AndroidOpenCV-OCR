@@ -42,8 +42,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/toggleButton1"
         android:text="ToggleButton" 
-        android:textOff="THRESH"
-        android:textOn="NORMAL"
+        android:textOff="NORMAL"
+        android:textOn="THRESHOLDED"
         />
+
 
 </RelativeLayout>
